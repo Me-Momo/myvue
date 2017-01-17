@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+
+</head>
+<body>
+  <div id="app">
+    <mt-button @click.native="handleClick">Button</mt-button>
+  </div>
+</body>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      methods: {
+        handleClick: function() {
+          this.$toast('Hello world!')
+        }
+      }
+    });
+    var demo=new Vue({
+      el:'#demo',
+      data:{
+          searchString: "",
+          jobList: [{
+              "title": "前端工程师",
+              "img": "http://cdn.tutorialzine.com/wp-content/uploads/2016/03/css-variables-100x100.jpg",
+              "url": "https://www.lagou.com/zhaopin/qianduankaifa/?labelWords=label"
+          }, {
+              "title": "Java工程师",
+              "img": "http://cdn.tutorialzine.com/wp-content/uploads/2016/03/css-variables-100x100.jpg",
+              "url": "https://www.lagou.com/zhaopin/Java/?labelWords=label"
+          }, {
+              "title": "运维工程师",
+              "img": "http://cdn.tutorialzine.com/wp-content/uploads/2016/03/css-variables-100x100.jpg",
+              "url": "https://www.lagou.com/zhaopin/yunwei/?labelWords=label"
+          }, {
+              "title": "产品经理",
+              "url": "https://www.lagou.com/zhaopin/chanpinjingli1/?labelWords=label"
+          }]
+      } //data end
+    })
+  </script>
+</html>

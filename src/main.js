@@ -1,16 +1,29 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-
-// 在 webpack.base.conf 中被设置为入口文件
 import Vue from 'vue'
 import App from './App'
+import router from './router'
+import store from './utils/store'
+import VueResource from 'vue-resource'
+import mint from 'mint-ui'
+
+import './utils/filter'
+import 'mint-ui/lib/style.css'
+import '../static/css/vue-material.css'
+// 自定义样式
+import './assets/css/style.css'
+import './assets/css/player.css'
+
+var VueMaterial = require('vue-material')
+
+Vue.use(VueMaterial)
+
+Vue.use(mint)
+Vue.use(VueResource)
+
 
 /* eslint-disable no-new */
-// 实例化 #app vm实例
 new Vue({
   el: '#app',
-  template: '<App/>',
-  components: {
-    App
-  }
+  router,
+  store,
+  render: h => h(App)
 })
