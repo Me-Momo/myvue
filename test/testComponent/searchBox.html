@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+  <style>
+img{
+  width:100vw;
+  height:100vh;
+}
+
+  </style>
+</head>
+<body>
+  <div id="demo" v-cloak>
+      <img v-bind:src="picUrl" alt="背景">
+  </div>
+</body>
+  <script src="js/vue.js"></script>
+<script src="js/vue-resource.js"></script>
+</script>
+  <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+  <script>
+// [TOTO]:add the search-function with computed
+    var vm=new Vue({
+      el:'#demo',
+      data:{
+         log:'测试',
+          picUrl:'',
+          apiUrl:'http://127.0.0.1:1234/playlistDetail?id='
+      } //data end
+      //利用 生命周期钩子 将数据注入
+      ,mounted:function(){
+        this.init();
+      }
+      ,methods:{
+        init:function(){
+          this.$http.get(this.apiUrl+'422995334')
+          .then(function(response){
+            this.log=response;
+ this.$set('picUrl', "ccc")
+          }).catch(function(response) {
+                    console.log("请求失败："+response.status)
+                })
+        }
+      }
+    });
+console.log(vm.log)
+  </script>
+</html>

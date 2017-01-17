@@ -1,37 +1,29 @@
-<style>
-
-#app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-}
-
-</style>
-
 <template>
-
-<div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
-</div>
-
+  <div id="app" class="">
+    <customheader></customheader>
+    <div class="main-wrapper">
+    <div class="main">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </div>
+    </div>
+    <playlist></playlist>
+    <player></player>
+  </div>
 </template>
 
-<script>
-
-// App作为父组件，建议App中不写业务逻辑，作为应用的layout，
-// 根据需求，做一个布局。比如：Header/Container/Sidebar。
-
-import Hello from './components/Hello'
+<script type="es6">
+import customheader from './components/header/header'
+import playlist from './components/Playlist'
+import player from './components/Player'
 
 export default {
     name: 'app',
     components: {
-        Hello
-    }
+    customheader,
+    playlist,
+    player
+  }
 }
-
 </script>
