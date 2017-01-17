@@ -237,9 +237,7 @@ box-shadow: 0px 3px 15px rgba(0,0,0,.4);
   height: 100%;
 }
 
-.audio-row:hover {
- background: #efefef;
-}
+.audio-row:hover,
 .audioRowCur{
   background: rgba(255, 235, 59, 0.34);
 }

@@ -32,12 +32,12 @@ export default {
 },
   methods: {
     getList(){
-      Indicator.open({
-        text: '加载中...',
-        spinnerType: 'snake'
-      });
-      for(var i=0;i<50;i++){
-      this.$store.dispatch('getRadio','init');
+      // Indicator.open({
+      //   text: '加载中...',
+      //   spinnerType: 'snake'
+      // });
+      for(var i=0;i<5;i++){
+      this.$store.dispatch('getRadio','current');
       }
       setTimeout(()=> {
       //  TODO:当全部加载完毕时关闭
@@ -45,7 +45,7 @@ export default {
       }, 1000);
     },
     deleteAudio(index){
-      this.$store.commit('deleteAudio',index);
+      this.$store.commit('deleteAudio',{index,index});
     }
   }
 }

@@ -1,5 +1,5 @@
 <template lang="html">
-<div class="header" v-show='toggleHeader'>
+<div class="header" v-show='showHead'>
    <head-util></head-util>
    <head-nav></head-nav>
 </div>
@@ -12,7 +12,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed:{
-    ...mapGetters(['toggleHeader'])
+    ...mapGetters(['showHead'])
   },
   components:{
    headUtil,headNav

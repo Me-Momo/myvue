@@ -120,6 +120,13 @@ div.card-img-overlay {
 .slide-fade-enter, .slide-fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   animation: slideOutDown .5s;
 }
+.bounce-in-out-enter-active{
+animation: bounceInRight .5s;
+}
+.bounce-in-out-enter,.bounce-in-out-leave-to{
+  /*animation: bounceOutLeft .5s;*/
+}
+
 .main {
     margin-top: 3px;
     overflow-y:auto;

@@ -1,7 +1,9 @@
 <template lang="html">
   <div class="cell">
         <div class="cur"><slot name='cur'></slot></div>
-        <div class="img"><slot name='img'></slot><slot></slot></div>
+        <div class="img">
+          <slot name='img'></slot>
+        </div>
         <div class="cell-info">
           <slot name='title'></slot>
           <slot name='title_'></slot>
@@ -24,7 +26,7 @@ export default {
   line-height: 50px;
   clear: left;
   color: rgb(27, 22, 21);
- background: linear-gradient(to right ,rgb(255, 255, 255) 6px,rgba(255, 134, 125, 0.93) 0);
+ background: linear-gradient(to right ,rgb(255, 255, 255) 6px,rgba(255, 134, 125, 0.1) 0);
   cursor: pointer;
   -webkit-transition: all .2s ease;
   transition: all .2s ease;

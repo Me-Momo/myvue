@@ -10,11 +10,11 @@ const router = new VueRouter({
     path: '/radio',
     component: require('../views/radio')
   }, {
-    path: '/plistInfo',
-    component: require('../views/plistInfo')
+    path: '/playlist',
+    component: require('../views/playlist')
   }, {
-    path: '/plistInfo/:id',
-    component: require('../views/plist')
+    path: '/playlist/:id',
+    component: require('../views/playlist_id')
   }, {
     path: '/singer',
     component: require('../views/singer')
@@ -25,8 +25,8 @@ const router = new VueRouter({
     path: '/search',
     component: require('../views/search')
   }, {
-    path: '/player/:id',
-    component: require('../views/mainPlayer')
+    path: '/my',
+    component: require('../views/myMusic')
   }, {
     path: '*',
     redirect: '/index'
