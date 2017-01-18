@@ -18,11 +18,13 @@ const state = {
     duration: 0,
     currentTime: 0,
     // ablum: {},
-    popularity: 0
+    popularity: -1,
+    lyric: "找不到歌词"
   },
-  isPlay: true,
+  isPlay: false,
   currentListInfo: {
     audioList: [],
+    index: 0,
     ids: new Set()
   },
   favListInfo: {
@@ -33,9 +35,8 @@ const state = {
     audioList: [],
     ids: new Set()
   },
+  showHead: true,
   loadingState: true,
-  currentIndex: 0,
-  toggleHeader: true,
   togglePlaylist: false
 }
 const getters = {
@@ -46,54 +47,71 @@ const getters = {
   curList: state => state.currentListInfo.audioList,
   favList: state => state.favListInfo.audioList,
   searchList: state => state.searchListInfo.audioList,
-  currentIndex: state => state.currentIndex,
-  togglePlaylist: state => state.togglePlaylist,
-  toggleHeader: state => state.toggleHeader
+  currentIndex: state => state.currentListInfo.index,
+  showHead: state => state.showHead,
+  togglePlaylist: state => state.togglePlaylist
 }
 
 const mutations = {
   toggleAudioLoadding: (state, flag) => {
-    state.audioLodding = flag;
+    state.loadingState = flag;
   },
-  toggleHeader: (state, flag) => {
-    state.toggleHeader = flag;
+  showHead: (state, flag) => {
+    state.showHead = flag;
   },
   togglePlaylist(state, flag) {
+    console.log(flag)
     state.togglePlaylist = flag;
-  },
-  playAudio(state, index) {
-    var audio = state.currentListInfo.audioList[index];
-    state.currentIndex = index;
-    state.audio = {...(state.audio),
-      ...audio
-    };
   },
   addAudioList(state, {
     audio,
-    type = ''
+    type
   }) {
-    var listInfo;
     switch (type) {
       case 'current':
-        listInfo = state.currentListInfo
+        {
+          console.log(state + "here")
+          if (state.currentListInfo.ids.has(audio.id)) {
+            state.currentListInfo.audioList.map(function (item, index) {
+              if (item.id === audio.id) {
+                state.audio = {...(state.audio), ...(item)
+                }
+                state.currentListInfo.index = index
+              }
+            })
+          } else {
+            state.currentListInfo.audioList.push(audio);
+            state.currentListInfo.ids.add(audio.id);
+            state.audio = {...(state.audio), ...(audio)
+            }
+            state.currentListInfo.index = state.currentListInfo.audioList.length
+          }
+        }
         break;
       case 'favor':
-        listInfo = state.favListInfo
+        if (!state.favListInfo.ids.has(audio.id)) {
+          state.favListInfo.audioList.push(audio);
+          state.favListInfo.ids.add(audio.id);
+        }
         break;
       case 'search':
-        listInfo = state.searchListInfo
+        if (!state.searchListInfo.ids.has(audio.id)) {
+          state.searchListInfo.audioList.push(audio);
+          state.searchListInfo.ids.add(audio.id);
+        }
         break;
       default:
-        listInfo = state.currentListInfo
+        break;
     }
-    if (!listInfo.ids.has(audio.id)) {
-      listInfo.audioList.push(audio);
-      listInfo.ids.add(audio.id);
+  },
+  setLrc: (state, lyric) => {
+    state.audio = {...(state.audio), lyric
     }
+    console.log(state.audio)
   },
   setAudioList(state, {
     audioList,
-    type = ''
+    type
   }) {
     var listInfo;
     switch (type) {
@@ -109,105 +127,137 @@ const mutations = {
       default:
         listInfo = state.currentListInfo
     }
-    listInfo.audioList = {...(listInfo.audioList),
-      ...audioList
-    }
+    listInfo.audioList = audioList
   },
-  addSearchList(state, audio) {
-    if (!state.searchListInfo.ids.has(audio.id)) {
-      state.searchListInfo.audioList.push(audio);
-      state.searchListInfo.ids.add(audio.id);
-    }
-  },
-  setSearchList(state, audioList) {
-    state.searchListInfo.searchList = {...(state.searchListInfo
-        .audioList),
-      ...audioList
-    }
-  },
-  playAudioCurrentTime(state, time) {
+  setAudioCurrentTime(state, time) {
     state.audio.currentTime = time;
   },
   isPlay(state, flag) {
     state.isPlay = flag;
   },
-
   deleteAudio(state, index) {
     state.currentListInfo.audioList.splice(index, 1);
+  },
+  setAudio(state, index) {
+    if (state.currentListInfo.audioList.length > 0) {
+      var audio = state.currentListInfo.audioList[index];
+      state.currentListInfo.index = index;
+      state.audio = {...(state.audio), ...(audio)
+      }
+      state.isPlay = true
+      state.toggleAudioLoadding = false
+    }
   }
 }
 
 const actions = {
+
   getRadio({
       commit,
       state
     }, type) {
       commit("toggleAudioLoadding", true);
-      // this.$Loading.start()
-      console.log("测试这里！" + type)
       Vue.http.get(`http://127.0.0.1:1234/radio`)
         .then((res) => {
-          // this.$Loading.finish()
           var audio = JSON.parse(res.body)
             .audio;
-          if (type == 'init') {
-            commit('setAudioList', audio)
-          } else if (type == 'radio') {
-            commit('setSearchList', audio)
+          var info = {
+            audio: audio,
+            type: type
           }
-          console.log("测试这里 audio ！" + audio)
+          commit('addAudioList', info)
         })
         .catch(function (err) {
-          // this.$Loading.failed()
           console.log("发生错误" + err)
-            //
         });
+      commit("toggleAudioLoadding", false);
     },
     getSong({
       commit,
       state
     }, id) {
-      Vue.http.get(`http://127.0.0.1:1234/songDetail?id=${id}`)
+      commit("toggleAudioLoadding", true);
+      Vue.http.get(`http://127.0.0.1:1234/song?id=${id}`)
         .then((res) => {
           var audio = JSON.parse(res.body)
-            .audio;
-          commit('addAudioList', audio)
-          commit('playAudio', currentIndex + 1);
+            .song;
+          var info = {
+            audio: audio,
+            type: 'current'
+          }
+          commit('addAudioList', info)
         })
         .catch((err) => {
           console.log("获取音乐失败" + err);
         })
+      commit("toggleAudioLoadding", false);
     },
     search({
       commit,
       state
     }, param) {
-      Vue.http.get(`http://127.0.0.1:1234/search?q=${param}`)
+      commit("toggleAudioLoadding", true);
+      Vue.http.get(`http://127.0.0.1:1234/search?${param}`)
         .then((res) => {
-          res = Array.of(res);
-          commit('setSearchList', res);
+          console.log(res)
+          var audioList = JSON.parse(res.body);
+          if (/(offset=)\S*/.test(param)) {
+            audioList.map((audio) => {
+              var info = {
+                audio: audio,
+                type: 'search'
+              }
+              commit('addAudioList', info)
+            })
+          } else {
+            var info = {
+              audioList: audioList,
+              type: 'search'
+            }
+            commit('setAudioList', info)
+          }
         })
         .catch((err) => {
           console.log("查询失败" + err);
         })
+      commit("toggleAudioLoadding", false);
     },
     getPlaylist({
       commit,
       state
     }, id) {
+      commit("toggleAudioLoadding", true);
       Vue.http.get(`http://127.0.0.1:1234/playlist?id=${id}`)
         .then((res) => {
-          res = JSON.parse(res.body);
-          [].map.call(res, (item) => {
-            console.log("测试" + item)
-            commit('addSearchList', item);
-          });
+          var audioList = JSON.parse(res.body);
+          var info = {
+            audioList: audioList,
+            type: 'search'
+          }
+          commit('setAudioList', info);
+        }, (err) => {
+          console.log("vue-resource 失败测试:" + err)
+            // 错误处理地方
         })
         .catch((err) => {
           console.log("获取失败" + err);
         })
+      commit("toggleAudioLoadding", false);
+    },
+    getLyric({
+      commit, state
+    }, id) {
+      commit("toggleAudioLoadding", true);
+      Vue.http.get(`http://127.0.0.1:1234/songLyric?id=${id}`)
+        .then((res) => {
+          var lyric = JSON.parse(res.body)
+          commit('setLrc', lyric.lyric)
+        })
+        .catch((err) => {
+          console.log("获取失败" + err);
+        })
+      commit("toggleAudioLoadding", false);
     }
-    // ,initSearch
 }
 
 

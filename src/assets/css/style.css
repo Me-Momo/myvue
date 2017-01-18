@@ -36,6 +36,13 @@ a:not(.md-button):not(.md-bottom-bar-item):hover,a:not(.md-button):not(.md-botto
 .mint-navbar .mint-tab-item.is-selected:hover{
   border-bottom: 3px solid rgb(244, 67, 54);
 }
+.mint-navbar .mint-tab-item.is-selected:active{
+  border-bottom: 3px solid rgb(244, 67, 54);
+}
+/*轮播图*/
+.carousel {
+    margin-top: 3px;
+}
 .carousel-item img{
   width:100%;
   max-height:34vh;
@@ -120,8 +127,15 @@ div.card-img-overlay {
 .slide-fade-enter, .slide-fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   animation: slideOutDown .5s;
 }
+.bounce-in-out-enter-active{
+animation: bounceInRight .5s;
+}
+.bounce-in-out-enter,.bounce-in-out-leave-to{
+  /*animation: bounceOutLeft .5s;*/
+}
+
 .main {
-    margin-top: 3px;
+    /*margin-top: 3px;*/
     overflow-y:auto;
     margin-bottom: 100px;
 }
@@ -144,4 +158,25 @@ div.card-img-overlay {
   position: relative;
   margin-left: calc(50% - 25px);
   margin-top: 18%;
+}
+
+/*寻找列表清单样式*/
+ul.searchList{
+  padding: 0;
+}
+
+.my {
+    min-height: 100vh;
+}
+img.media-object {
+    width: 32vw;
+    height: 32vw;
+}
+.col-md-8.col-sm-12 {
+    /* height: auto; */
+    margin: 33px 7px;
+}
+.label{
+   border: 1px solid rgb(244, 67, 54);
+   border-radius: 16px;
 }

@@ -26,17 +26,17 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
-    <plistInfo></plistInfo>
-    <plistInfo></plistInfo>
+    <playlist></playlist>
+    <playlist></playlist>
   </div>
 
 </template>
 
 <script>
-import plistInfo from './plistInfo'
+import playlist from './playlist'
 export default {
   components:{
-plistInfo
+playlist
   }
 }
 
