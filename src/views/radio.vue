@@ -1,15 +1,17 @@
 <template lang="html">
-<ul>
+<ul class='searchList'>
+  <li><span @click='getList("init")'>换一批</span></li>
 <cell v-for='audio in searchList'>
   <div slot="img">
     <img :src='audio.imgUrl'></img>
-    <div class='mask'></div>
     <div class='play-bg' :class='{hide: isPlay}'  @click='playAudio({id:audio.id})'></div>
     <div class='pause-bg' :class='{hide: !isPlay}' @click='pause'></div>
   </div>
   <div slot="title">{{ audio.name }}</div>
   <div slot="title_" class="text-sm">{{ audio.artists[0].name }}</div>
-  <span slot="icon" class="glyphicon glyphicon-music"></span>
+  <span slot='cell-more'>{{audio.popularity }}</span>
+  <span slot="icon" class="glyphicon glyphicon-music" :class='{hide: !isPlay}'></span>
+  <span class="glyphicon glyphicon-fire" slot="icon"></span>
 </cell>
 <mt-spinner color="#f44336" type="fading-circle"  :size='60' v-show='loadingState'></mt-spinner>
 </ul>
@@ -39,14 +41,9 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       //利用路由的before钩子解除router-view的缓存限制，重新获取列表
-      var info = {
-        audioList: [],
-        type: 'search'
-      }
-      vm.$store.commit('setAudioList', info);
-      vm.getList();
-      $(window)
-        .scroll(function() {
+
+      vm.getList('init');
+      $(window).scroll(function() {
           var scrollHeight = $('.main')
             .height();
           var scrollTop = $(window)
@@ -73,7 +70,14 @@ export default {
   methods: {
     getList() {
       // TODO:just for test :20
-      for (var i = 0; i < 5; i++) {
+      if(arguments[0]==='init'){
+        var info = {
+          audioList: [],
+          type: 'search'
+        }
+        this.$store.commit('setAudioList', info);
+      }
+      for (var i = 0; i < 15; i++) {
         this.$store.dispatch('getRadio', 'search');
       }
     },
@@ -96,17 +100,22 @@ export default {
 ul.radio-playlist {
   padding: 0;
 }
-
-.cell .mask {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width：100%； height: 50px;
-  background: #000;
-  opacity: 0.2;
-  filter: alpha(opacity=20);
+ul>li{
+  line-height: 50px;
+color: rgb(27, 22, 21);
+background: linear-gradient(to right ,rgb(255, 255, 255) 6px,rgba(255, 134, 125, 0.1) 0);
+cursor: pointer;
+font-size: 17px;
+padding: 0;
+height: 50px;
+position: relative;
 }
-
+ul>li>span{
+  float: right;
+    margin-right: 30px;
+    color: rgba(244, 67, 54, 0.77);
+    font-family: sans-serif;
+}
 .cell .play-bg {
   position: absolute;
   width: 33px;

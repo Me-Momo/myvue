@@ -28,6 +28,9 @@ const router = new VueRouter({
     path: '/my',
     component: require('../views/myMusic')
   }, {
+    path: '/mainplayer',
+    component: require('../views/mainplayer')
+  }, {
     path: '*',
     redirect: '/index'
   }]

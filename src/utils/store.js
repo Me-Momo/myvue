@@ -104,9 +104,10 @@ const mutations = {
         break;
     }
   },
-  setLrc: (state, lrc) => {
-    state.audio = {...(state.audio), lrc
+  setLrc: (state, lyric) => {
+    state.audio = {...(state.audio), lyric
     }
+    console.log(state.audio)
   },
   setAudioList(state, {
     audioList,
@@ -247,10 +248,10 @@ const actions = {
       commit, state
     }, id) {
       commit("toggleAudioLoadding", true);
-      Vue.http.get(`http://127.0.0.1:1234/playlist?id=${id}`)
+      Vue.http.get(`http://127.0.0.1:1234/songLyric?id=${id}`)
         .then((res) => {
-          var lyric = JSON.parse(res)
-          commit('setLrc', lyric)
+          var lyric = JSON.parse(res.body)
+          commit('setLrc', lyric.lyric)
         })
         .catch((err) => {
           console.log("获取失败" + err);

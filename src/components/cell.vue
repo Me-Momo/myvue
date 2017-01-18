@@ -1,6 +1,5 @@
 <template lang="html">
   <div class="cell">
-        <div class="cur"><slot name='cur'></slot></div>
         <div class="img">
           <slot name='img'></slot>
         </div>
@@ -9,7 +8,7 @@
           <slot name='title_'></slot>
         </div>
         <div class="cell-more">
-        <slot class="cell-more"></slot></div>
+        <slot name="cell-more"></slot></div>
         <span class='icon'><slot name="icon"></slot></span>
   </div>
 </template>
@@ -35,22 +34,25 @@ export default {
   line-height: 0;
   border-top: 1px solid rgb(233, 233, 233);
 }
- .cell>.cur,.cell>.img,.cell>.icon,.cell-info{
+.cell>.img,.cell>.icon,.cell-info{
    position: absolute;
    bottom: 0;
    top: 0;
  }
- .cell>.cur>*,.cell>.img>*,.cell>.icon>*{
+.cell>.img>*,.cell>.icon>*{
    width:100%;
    height:100%;
  }
- .cell>.cur{
-   width: 3px;
-   height:80%;
-   top:10%;
- }
+ .img::before {
+    background: rgba(0, 0, 0, 0.25);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    content: '';
+}
  .cell>.img{
-   left: 5px;
    width: 50px;
    height: 50px;
    text-align: center;
@@ -79,11 +81,15 @@ export default {
     margin-top: 5px;
     color:#666;
   }
-.cell>.more{
-   right: 35px;
-   width: 30px;
-   text-align: right;
-   line-height: 30px;
+   .cell-more {
+    position: absolute;
+    right: 34px;
+    top: 0;
+    width: 38px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    color: rgb(244, 67, 54);
  }
 .cell>.icon{
  right: 8px;

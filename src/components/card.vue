@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="card">
     <div>
-       <div class='img'><slot name='img'></slot><div class="mask"></div></div>
+       <div class='img'><slot name='img'></slot></div>
        <div class="extra"><slot name='icon'></slot><slot name='tips'></slot></div>
        <div class="title"><slot name='title'></slot></div>
     </div>
@@ -27,16 +27,11 @@ export default {
     text-align: center;
     color:rgb(244, 67, 54)
 }
-.card .img,.card .img>img,.card .img>.mask{
+.card .img,.card .img>img{
   width:100%;
   height:100% !important;
 }
-.card .img>.mask{
-  position: absolute;
-  top: 0;
-  left: 0;
-  background:rgba(0, 0, 0, 0.38);
-}
+
 .card .title {
     position: absolute;
     text-align: center;

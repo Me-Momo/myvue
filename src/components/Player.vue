@@ -11,7 +11,7 @@
             <div class='bg  play-bg' :class='{hide: isPlay}' @click='playAudio({index:currentIndex})'></div>
             <div class='bg  pause-bg' :class='{hide: !isPlay}' @click='pause'></div>
         </div>
-        <div class="info">
+        <div class="info" @click='goRouter'>
           <div class="music">
             <span class="name">{{audio.name }}</span>
             <span class='sub' v-for='(artist,index) in  audio.artists'><span v-show="index!=0"> / </span> {{ artist.name}}</span>
@@ -95,6 +95,9 @@ export default {
     },
     togglelist() {
       this.$store.commit('togglePlaylist', !this.togglePlaylist)
+    },
+    goRouter(){
+      this.$router.push('/mainplayer')
     }
   },
   watch: {
