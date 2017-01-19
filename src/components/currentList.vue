@@ -11,7 +11,7 @@
                     <div class="artist" v-for="(artist,index) in audio.artists">  <span v-show="index!==0">/</span>{{ artist.name }} </div>
                    </div>
                   <div class="duration"> {{ audio.duration | timeFormat }}</div>
-                  <span class="delete" @click="deleteAudio(index)"  v-if="index  !==currentIndex" class='glyphicon glyphicon-remove pull-right'></span>
+                  <span @click="deleteAudio(index)"  v-if="index  !==currentIndex" class='delete glyphicon glyphicon-remove pull-right'></span>
                   <div class='bg play-icon' v-else ></div>
            </li>
            <li class="closePlaylist" @click="closePlaylist">关闭</li>
