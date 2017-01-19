@@ -1,4 +1,5 @@
 <template lang="html">
+  <div class="search">
   <transition name='bounce-in-out'>
     <div class="headToggle">
       <div class="input-group search">
@@ -47,7 +48,7 @@
 
 
 
-
+</div>
 
 
 </template>
