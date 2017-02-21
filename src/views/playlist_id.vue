@@ -3,7 +3,7 @@
     <div class="media">
     <div class="media-left media-middle">
       <a href="#">
-        <img class="media-object" src="//y.gtimg.cn/music/photo_new/T002R300x300M000000Ljw6T1Mwyji.jpg?max_age=2592000" alt="{{ 歌单名 }} +图" >
+        <img class="media-object" src="//y.gtimg.cn/music/photo_new/T002R300x300M000000Ljw6T1Mwyji.jpg?max_age=2592000" alt=" 歌单名  +图" >
         <i class='cover_mask'></i>
       </a>
     </div>
