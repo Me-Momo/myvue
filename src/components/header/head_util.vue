@@ -12,7 +12,7 @@
 <script>
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { mapGetters } from 'vuex'
+
 Vue.use(VueRouter)
 
 export default {

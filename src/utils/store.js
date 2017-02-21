@@ -10,8 +10,7 @@ Vue.use(VueResource)
 const state = {
   audio: {
     id: "",
-    mp3Url: '',
-    // mp3Url: "http://m2.music.126.net/BNTFaNAVmryQkoyuMTvIWw==/3442570907099641.mp3",
+    mp3Url: "http://m2.music.126.net/BNTFaNAVmryQkoyuMTvIWw==/3442570907099641.mp3",
     imgUrl: "http://p4.music.126.net/dqCjAdyVSI0y4y1Jc_Q_cQ==/2429920697409434.jpg?param=130y130",
     name: '未知',
     artists: [],
@@ -41,6 +40,7 @@ const state = {
 }
 const getters = {
   audio: state => state.audio,
+  curTime: state => state.audio.currentTime,
   isPlay: state => state.isPlay,
   ablum: state => state.audio.ablum,
   loadingState: state => state.loadingState,
@@ -60,7 +60,6 @@ const mutations = {
     state.showHead = flag;
   },
   togglePlaylist(state, flag) {
-    console.log(flag)
     state.togglePlaylist = flag;
   },
   addAudioList(state, {
@@ -70,7 +69,6 @@ const mutations = {
     switch (type) {
       case 'current':
         {
-          console.log(state + "here")
           if (state.currentListInfo.ids.has(audio.id)) {
             state.currentListInfo.audioList.map(function (item, index) {
               if (item.id === audio.id) {
@@ -86,6 +84,7 @@ const mutations = {
             }
             state.currentListInfo.index = state.currentListInfo.audioList.length
           }
+          state.isPlay = true
         }
         break;
       case 'favor':
@@ -199,7 +198,6 @@ const actions = {
       commit("toggleAudioLoadding", true);
       Vue.http.get(`http://127.0.0.1:1234/search?${param}`)
         .then((res) => {
-          console.log(res)
           var audioList = JSON.parse(res.body);
           if (/(offset=)\S*/.test(param)) {
             audioList.map((audio) => {
@@ -218,7 +216,7 @@ const actions = {
           }
         })
         .catch((err) => {
-          console.log("查询失败" + err);
+          console.log("查询失败" + JSON.stringify(err));
         })
       commit("toggleAudioLoadding", false);
     },

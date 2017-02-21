@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "json-loader": "^0.5.4",
-    "radon-ui": "^0.5.3",
     "vue": "^2.1.0",
     "vue-material": "^0.6.3"
   },
