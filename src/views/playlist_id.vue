@@ -1,101 +1,75 @@
 <template>
-  <div class="plist-view">
-    <div class="pull-left"><img src="http://p3.music.126.net/8UaJe7gMPwcVfdEQIGEREg==/5667982441251386.jpg" alt=""><span class="glyphicon glyphicon-info-sign" @click="展示一个封面"></span></div>
-    <div class="pull-right">歌单介绍</div>
-  <div class="playlist plist_info">
-
-      <ul class="list">
-        <li class="audio-row" @click="addAllList">播放全部</li>
-        <li class="audio-row"  v-for="(audio,index) in searchList" :class='{ audioRowCur:(index===  currentIndex) }'>
-                <span :class='{cur:(index === currentIndex)}'></span>
-              <div class="index"> {{ index }}</div>
-              <div class="info"  v-on:click="playAudio({id:audio.id})"> {{ audio.name }}
-                <div class="artist" v-for="(artist,index) in audio.artists">  <span v-show="index!==0">/</span>{{ artist }} </div>
-               </div>
-              <div class="duration"> {{ audio.duration | timeFormat }}</div>
-
-       </li>
-      </ul>
-
+<div class="plist-view container">
+    <div class="media">
+    <div class="media-left media-middle">
+      <a href="#">
+        <img class="media-object" src="//y.gtimg.cn/music/photo_new/T002R300x300M000000Ljw6T1Mwyji.jpg?max_age=2592000" alt="{{ 歌单名 }} +图" >
+        <i class='cover_mask'></i>
+      </a>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">{{ 歌单名 }}</h4>
+      <p>{{ 歌单介绍 }}</p>
+    </div>
   </div>
+  <list :audiolist='searchList' @play-audio='playAudio' @add-all-list='addAllList'></list>
   </div>
 </template>
 
 <script type="es6">
 import Vue from 'vue'
-// import { PLAY_AUDIO }  from '../mixins'
-import {Indicator } from 'mint-ui'
-import { Loadmore } from 'mint-ui';
+
+import {
+  Indicator
+}
+
+from 'mint-ui'
+import {
+  Loadmore
+}
+
+from 'mint-ui';
 import { mapGetters } from 'vuex'
+import { AUDIO } from '../mixins'
+import list from '../components/List'
 
 Vue.component(Loadmore.name, Loadmore);
 export default {
-  // mixins:[PLAY_AUDIO],
-  computed:{
-    ...mapGetters(['searchList'])
+  mixins: [AUDIO],
+  computed: {
+    ...mapGetters(['searchList','currentIndex'])
   },
-  beforeRouteEnter (to, from, next) {
-  next(vm => {
-    // Indicator.open({
-    //   text:"加载中...",
-    //   spinnerType:"snack"
-    // })
-    // 通过 `vm` 访问组件实例,to和from都是路由对象
-    var hash=vm.$route.params.id
-    vm.$store.dispatch('getPlaylist',hash);
-   setTimeout(()=>{
-     Indicator.close();
-   },1000);
-  })
-},
-  methods: {
-    playAudio(param) {
-        if (param.id) {
-          this.$store.dispatch('getSong', param.id)
-        } else if (param.index) {
-        var index = param.index
-      this.$store.commit('setAudio', index)
+  components:{
+    list
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+        // 通过 `vm` 访问组件实例,to和from都是路由对象
+        var hash = vm.$route.params.id
+        vm.$store.dispatch('getPlaylist', hash);
+        setTimeout(() => {
+          Indicator.close()
+        }, 1000)
+      })
+    },
+    methods: {
+      addAllList() {
+        var that = this
+        this.searchList.map(function(item) {
+          that.$store.dispatch('getSong', item.id);
+        })
+      }
     }
-  },addAllList(){
-    var that=this
-    this.searchList.map(function(item){
-      that.$store.dispatch('getSong',item.id)
-    })
-  }
-}
 }
 </script>
 <style scoped>
-  .plist-view>div:first-child{
-    height:34vh;
-    width:100%;
-  }
-  .plist-view>div>.pull-left{
-    width: 25vh;
-    height: 100%;
-  }
-  .plist-view>div>.pull-left>img{
-    width: 100%;
-    height: 100%;
-  }
-  span.glyphicon.glyphicon-info-sign {
-      position: absolute;
-      top: calc(100% - 37px);
-      right: 20px;
-      z-index: 999;
-      font-size: 17px;
-  }
-  .plist-view>div:not(.playlist) {
-      float:left;
-      height: 50%;
-      width: 50%;
-      padding: 16px;
-      position: relative;
-  }
-  .plist-view>.playlist{
-      height: relative;
-      height: 60%;
-      bottom: 0;
-  }
-
+.media {
+    position: relative;
+    max-height: 300px;
+    max-width: 300px;
+    margin: 10px 0 !important;
+}
+.media-left{
+  position: relative;
+}
 </style>

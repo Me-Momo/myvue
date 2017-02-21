@@ -1,31 +1,40 @@
 <template lang="html">
-  <div class="cell">
+  <div class="cell"  @click='playAudio({id:audio.id})'>
         <div class="img">
-          <slot name='img'></slot>
+          <img :src='audio.imgUrl'></img>
+          <div class='play-bg'></div>
         </div>
         <div class="cell-info">
-          <slot name='title'></slot>
-          <slot name='title_'></slot>
+          <div class="title">{{ audio.name }}</div>
+          <div class="text-sm">{{ audio.artists[0].name }}</div>
         </div>
         <div class="cell-more">
-        <slot name="cell-more"></slot></div>
-        <span class='icon'><slot name="icon"></slot></span>
+          <span>{{audio.popularity }}</span>
+          <span class="glyphicon glyphicon-music" :class='{hide: !isPlay}'></span>
+          </div>
+      <span class="icon glyphicon glyphicon-fire" slot="icon"></span>
   </div>
 </template>
 
 <script>
 export default {
+  props:["audio"],
+  methods:{
+    playAudio(param){
+      this.$emit("play-audio",param)
+    }
+  }
 }
 </script>
 
-<style lang="css">
+<style scoped>
 .cell{
   height: 50px;
   position: relative;
   line-height: 50px;
   clear: left;
   color: rgb(27, 22, 21);
- background: linear-gradient(to right ,rgb(255, 255, 255) 6px,rgba(255, 134, 125, 0.1) 0);
+ background: linear-gradient(to right ,rgb(255, 255, 255) 0px,rgba(255, 134, 125, 0.1) 0);
   cursor: pointer;
   -webkit-transition: all .2s ease;
   transition: all .2s ease;
@@ -58,6 +67,7 @@ export default {
    text-align: center;
    color: #666;
    cursor: pointer;
+   margin:3px 12px;
  }
  .cell-info{
    color: #000;
@@ -107,5 +117,30 @@ position: absolute;
 }
 .glyphicon:before{
   line-height: 50px;
+}
+ul>li>span{
+  float: right;
+    margin-right: 30px;
+    color: rgba(244, 67, 54, 0.77);
+    font-family: sans-serif;
+}
+.cell .play-bg {
+  position: absolute;
+  width: 33px;
+  height: 33px;
+  top: 4px;
+  left: 2px;
+  cursor: pointer;
+  background: url(../assets/images/audio_sprite.png) no-repeat -68px -118px;
+}
+
+.cell .pause-bg {
+  position: absolute;
+  width: 20px;
+  height: 21px;
+  bottom: 1px;
+  right: 0px;
+  cursor: pointer;
+  background: url(../assets/images/audio_sprite.png) no-repeat 0px -60px;
 }
 </style>

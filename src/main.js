@@ -11,6 +11,10 @@ import '../static/css/vue-material.css'
 // 自定义样式
 import './assets/css/style.css'
 import './assets/css/player.css'
+import './assets/css/swipe.css'
+import './assets/css/mainplayer.css'
+
+import './assets/js/swipe.js'
 
 var VueMaterial = require('vue-material')
 

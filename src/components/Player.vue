@@ -4,14 +4,13 @@
     <currentList></currentList>
         <transition name="slide-fade">
     <div class='player  container-fluid' v-show='!togglePlaylist'>
-      <!-- <playlist></playlist> -->
         <div class='cover'>
             <img :src='audio.imgUrl'>
             <div class='mask'></div>
             <div class='bg  play-bg' :class='{hide: isPlay}' @click='playAudio({index:currentIndex})'></div>
             <div class='bg  pause-bg' :class='{hide: !isPlay}' @click='pause'></div>
         </div>
-        <div class="info" @click='goRouter'>
+        <div class="info">
           <div class="music">
             <span class="name">{{audio.name }}</span>
             <span class='sub' v-for='(artist,index) in  audio.artists'><span v-show="index!=0"> / </span> {{ artist.name}}</span>
@@ -45,39 +44,20 @@
 
 <script>
 import {
-  mapGetters
-} from 'vuex'
-import {
   Spinner,Toast
 } from 'mint-ui'
-import {PLAY_AUDIO} from '../mixins'
+import { AUDIO } from '../mixins'
 import currentList from './currentList'
 export default {
+  mixins:[AUDIO],
   components:{
     currentList
   },
-  computed: {
-    ...mapGetters(['audio', 'isPlay', 'loadingState', 'currentIndex', 'togglePlaylist', 'curList'])
-  },
   methods: {
-    play() {
-      this.$store.commit('isPlay', true);
-      document.getElementById('player').play();
-    },
-    pause() {
-      document.getElementById('player').pause();
-      this.$store.commit('isPlay', false);
-    },
     change() {
       var curTime = document.getElementById('player').currentTime * 1000;
       this.$store.commit('setAudioCurrentTime', curTime);
       $('.played').css('width', curTime * 2 * 60 / this.audio.duration + "%");
-    },
-    prev() {
-      if (this.currentIndex !== 0) {
-
-        this.$store.commit('setAudio',this.currentIndex - 1);
-      }
     },
     errorHandle(){
       Toast({
@@ -87,17 +67,6 @@ export default {
       });this.next()
       this.$store.commit('deleteAudio',this.currentIndex);
       this.$store.commit('isPlay',false)
-    },
-    next() {
-      if (this.currentIndex !== this.curList.length) {
-        this.$store.commit('setAudio',this.currentIndex+1);
-      }
-    },
-    togglelist() {
-      this.$store.commit('togglePlaylist', !this.togglePlaylist)
-    },
-    goRouter(){
-      this.$router.push('/mainplayer')
     }
   },
   watch: {
