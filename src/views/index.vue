@@ -47,7 +47,7 @@ import {
   Indicator
 } from 'mint-ui';
 
-import playlist from '../components/playlist'
+import playlist from '../components/Playlist'
 import plist0 from '../json/plist'
 import plist1 from '../json/plist1'
 
