@@ -301,7 +301,7 @@
   };
 
   var logError = function (message) {
-    if (this.console) {
+    if (window.console) {
       console.error(message);
     }
   };
@@ -356,5 +356,7 @@
 
 $(function () {
   $("#swipe")
-    .Swipe();
+    .Swipe({
+      autoplay: true
+    });
 });

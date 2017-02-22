@@ -156,7 +156,7 @@ const actions = {
       state
     }, type) {
       commit("toggleAudioLoadding", true);
-      Vue.http.get(`http://139.199.178.135:1234/radio`)
+      Vue.http.get(`http://localhost:1234/radio`)
         .then((res) => {
           var audio = JSON.parse(res.body)
             .audio;
@@ -176,7 +176,7 @@ const actions = {
       state
     }, id) {
       commit("toggleAudioLoadding", true);
-      Vue.http.get(`http://139.199.178.135:1234/song?id=${id}`)
+      Vue.http.get(`http://localhost:1234/song?id=${id}`)
         .then((res) => {
           var audio = JSON.parse(res.body)
             .song;
@@ -196,7 +196,7 @@ const actions = {
       state
     }, param) {
       commit("toggleAudioLoadding", true);
-      Vue.http.get(`http://139.199.178.135:1234/search?${param}`)
+      Vue.http.get(`http://localhost:1234/search?${param}`)
         .then((res) => {
           var audioList = JSON.parse(res.body);
           if (/(offset=)\S*/.test(param)) {
@@ -225,7 +225,7 @@ const actions = {
       state
     }, id) {
       commit("toggleAudioLoadding", true);
-      Vue.http.get(`http://139.199.178.135:1234/playlist?id=${id}`)
+      Vue.http.get(`http://localhost:1234/playlist?id=${id}`)
         .then((res) => {
           var audioList = JSON.parse(res.body);
           var info = {
@@ -246,7 +246,7 @@ const actions = {
       commit, state
     }, id) {
       commit("toggleAudioLoadding", true);
-      Vue.http.get(`http://139.199.178.135:1234/songLyric?id=${id}`)
+      Vue.http.get(`http://localhost:1234/songLyric?id=${id}`)
         .then((res) => {
           var lyric = JSON.parse(res.body)
           commit('setLrc', lyric.lyric)

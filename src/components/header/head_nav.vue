@@ -8,8 +8,9 @@
 </template>
 
 <script type="es6">
+import { Navbar, TabItem } from 'mint-ui'
 export default {
-
+    components: {Navbar, TabItem}
 }
 </script>
 

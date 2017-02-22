@@ -60,6 +60,11 @@ export default {
   components: {
      playlist
   },
+  beforeRouteEnter(to,from,next){
+    next(vm=>{
+      $("#swipe").Swipe('cycle');
+  });
+  },
   methods:{
     getList() {
       Indicator.open({

@@ -8,8 +8,8 @@
       </a>
     </div>
     <div class="media-body">
-      <h4 class="media-heading">{{ 歌单名 }}</h4>
-      <p>{{ 歌单介绍 }}</p>
+      <h4 class="media-heading"> 歌单名 </h4>
+      <p> 歌单介绍 </p>
     </div>
   </div>
   <list :audiolist='searchList' @play-audio='playAudio' @add-all-list='addAllList'></list>
