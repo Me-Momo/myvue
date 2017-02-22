@@ -29,9 +29,14 @@ export default {
         audioList: [],
         type: 'search'
       });
-      for(var i=0;i<20;i++){
+      for(var i=0;i<10;i++){
         vm.$store.dispatch('getRadio','search');
       }
+      setTimeout(function(){
+        for(var i=0;i<10;i++){
+          vm.$store.dispatch('getRadio','search');
+        }
+      },500);
     });
   },
   methods: {
