@@ -15,11 +15,11 @@ export default [{
   "id": "578499600",
   "imgUrl": "http://p4.music.126.net/bA4HKK1NA_DBNtoN-ZlocA==/18545462627469664.jpg?param=200y200"
 }, {
-  "title": "「民谣」你要学会长大，一个人抵过千军万马",
-  "id": "550826227",
-  "imgUrl": "http://p4.music.126.net/inF4XDC647GUA9oQvUWJVA==/18698294743642359.jpg?param=200y200"
+  "title": "[日系]艳丽大方的魅力女音",
+  "id": "584365345",
+  "imgUrl": "http://p3.music.126.net/b9o41cEfVKRCUMYnOt8DrA==/18640020627496697.jpg?param=200y200"
 }, {
-  "title": "「民谣」你要学会长大，一个人抵过千军万马",
-  "id": "550826227",
-  "imgUrl": "http://p4.music.126.net/inF4XDC647GUA9oQvUWJVA==/18698294743642359.jpg?param=200y200"
+  "title": "「日系R&B/合集」男女对唱，百听不厌的歌声",
+  "id": "583326047",
+  "imgUrl": "http://p4.music.126.net/PzmqbvvIxouOfesMMSrQZg==/18742275208828611.jpg?param=200y200"
 }]

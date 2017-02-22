@@ -159,6 +159,7 @@ div.card-img-overlay {
   overflow-y: auto;
   margin-bottom: 90px;
   background: rgba(247, 248, 250, 0.54);
+  min-height: 100vh;
 }
 /*掩盖滚动条*/
 .main-wrapper {
