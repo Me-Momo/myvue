@@ -338,14 +338,14 @@
               instance._slide('prev');
               break;
             default:
-              logError("no such method '" + options +
-                "' for Swipe instance");
+              // logError("no such method '" + options +
+              //   "' for Swipe instance");
               break;
           }
         } else {
-          logError(
-            "cannot call methods on Swipe prior to initialization; " +
-            "attempted to call method '" + options + "'");
+          // logError(
+          //   "cannot call methods on Swipe prior to initialization; " +
+          //   "attempted to call method '" + options + "'");
           return;
         }
       });
